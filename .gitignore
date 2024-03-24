@@ -1,8 +1,4 @@
 
 .DS_Store
-.idea/compiler.xml
-.idea/dbnavigator.xml
-.idea/encodings.xml
-.idea/jarRepositories.xml
-.idea/misc.xml
-.idea/workspace.xml
+.idea/*
+target/*

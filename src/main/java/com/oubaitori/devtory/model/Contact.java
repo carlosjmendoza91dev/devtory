@@ -5,6 +5,7 @@ import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.Document;
 
 import java.util.Date;
+import java.util.List;
 
 @Document("contact")
 @AllArgsConstructor
@@ -20,5 +21,9 @@ public class Contact {
     private String tribe;
 
     private Date admissionDate;
+
+    private List<String> skills;
+
+    private List<String> specialties;
 
 }

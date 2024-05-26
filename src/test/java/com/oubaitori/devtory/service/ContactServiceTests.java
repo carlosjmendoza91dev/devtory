@@ -36,10 +36,9 @@ class ContactServiceTests {
     public void init(){
         contactName = "Carlos Mendoza";
         contact = Contact.builder().name(contactName).build();
-        contact.setName(contactName);
         contactDTO = new ContactDTO(
                 "UUID",
-                "Carlos Mendoza",
+                contactName,
                 "Loans",
                 "Card",
                 new Date(),

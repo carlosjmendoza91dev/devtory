@@ -13,12 +13,10 @@ public class ContactService {
     ContactRepository contactRepository;
 
     public Contact saveContact(Contact contact) throws ContactAlreadyExistsException {
-
         if(contactRepository.existsByName(contact.getName()))
             throw new ContactAlreadyExistsException();
 
         return contactRepository.save(contact);
-
     }
 
 }

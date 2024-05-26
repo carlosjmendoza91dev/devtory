@@ -14,13 +14,14 @@ public class ContactService {
     @Autowired
     ContactRepository contactRepository;
 
-    public Contact saveContact(ContactDTO contactDTO) throws ContactAlreadyExistsException {
+    public ContactDTO saveContact(ContactDTO contactDTO) throws ContactAlreadyExistsException {
         if(contactRepository.existsByName(contactDTO.getName()))
             throw new ContactAlreadyExistsException();
 
         Contact contact = new Contact();
         BeanUtils.copyProperties(contactDTO, contact);
-        return contactRepository.save(contact);
+        contactRepository.save(contact);
+        return contactDTO;
     }
 
 }

@@ -1,9 +1,11 @@
 package com.oubaitori.devtory.service;
 
+import com.oubaitori.devtory.dto.ContactDTO;
 import com.oubaitori.devtory.exception.business.ContactAlreadyExistsException;
 import com.oubaitori.devtory.model.Contact;
 import com.oubaitori.devtory.repository.ContactRepository;
 import org.assertj.core.util.Lists;
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
@@ -26,11 +28,16 @@ class ContactServiceTests {
     @InjectMocks
     ContactService contactService;
 
-    @Test
-    void testShouldSaveNewContact() throws ContactAlreadyExistsException {
+    private Contact contact;
+    private ContactDTO contactDTO;
+    private String contactName;
 
-        //Arrange
-        Contact contact = new Contact(
+    @BeforeEach
+    public void init(){
+        contactName = "Carlos Mendoza";
+        contact = Contact.builder().name(contactName).build();
+        contact.setName(contactName);
+        contactDTO = new ContactDTO(
                 "UUID",
                 "Carlos Mendoza",
                 "Loans",
@@ -39,33 +46,25 @@ class ContactServiceTests {
                 Lists.newArrayList("PHP"),
                 Lists.newArrayList("Logging")
         );
+    }
+
+    @Test
+    void testShouldSaveNewContact() throws ContactAlreadyExistsException {
+
+        //Arrange
+        when(contactRepository.save(any(Contact.class))).thenReturn(contact);
 
         //Act
-        when(contactRepository.save(any(Contact.class))).thenReturn(contact);
-        var savedContact = contactService.saveContact(contact);
+        var savedContact = contactService.saveContact(contactDTO);
 
         //Assert
-        assertThat(savedContact).isEqualTo(contact);
+        assertThat(savedContact.getName()).isEqualTo(contactDTO.getName());
     }
 
     @Test
     void testShouldThrowContactAlreadyExistsException() {
-
-        String contactName = "Carlos Mendoza";
-
-        Contact contact = new Contact(
-                "UUID",
-                contactName,
-                "Loans",
-                "Card",
-                new Date(),
-                Lists.newArrayList("PHP"),
-                Lists.newArrayList("Logging")
-        );
-
         when(contactRepository.existsByName(contactName)).thenReturn(true);
-        assertThrows(ContactAlreadyExistsException.class, () -> contactService.saveContact(contact));
-
+        assertThrows(ContactAlreadyExistsException.class, () -> contactService.saveContact(contactDTO));
     }
 
 }

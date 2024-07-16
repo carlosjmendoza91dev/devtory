@@ -1,21 +1,18 @@
-package com.oubaitori.devtory.model;
+package com.oubaitori.devtory.dto;
 
-import lombok.*;
-import org.springframework.data.annotation.Id;
-import org.springframework.data.mongodb.core.mapping.Document;
+import lombok.AllArgsConstructor;
+import lombok.Builder;
+import lombok.Data;
+import lombok.NoArgsConstructor;
 
 import java.util.Date;
 import java.util.List;
 
-@Document("contact")
-@Getter
-@Setter
 @AllArgsConstructor
 @NoArgsConstructor
 @Builder
-public class Contact {
-
-    @Id
+@Data
+public class ContactDTO {
     private String id;
 
     private String name;
